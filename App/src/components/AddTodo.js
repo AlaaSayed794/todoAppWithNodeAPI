@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-
-export default class AddTodo extends Component {
+import { connect } from 'react-redux'
+import { addTodo } from '../actions/todosActions'
+class AddTodo extends Component {
     state = {
         description: ""
     }
@@ -27,3 +28,7 @@ export default class AddTodo extends Component {
         )
     }
 }
+const mapStoreToProps = (store) => ({
+    todos: store.todos
+})
+export default connect(mapStoreToProps, { handleSubmit: addTodo })(AddTodo)

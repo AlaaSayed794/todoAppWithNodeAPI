@@ -1,6 +1,8 @@
 import React from 'react'
+import { editTodo, delTodo } from '../actions/todosActions'
+import { connect } from 'react-redux'
 
-export default function Todos(props) {
+function Todos(props) {
     return (
         <table>
             <thead>
@@ -16,7 +18,7 @@ export default function Todos(props) {
                         <tr key={todo.id}>
                             {//any element that requires a loop must have a key
                             }
-                            <td><input type="checkbox" /></td>
+                            <td><input checked={todo.completed} onChange={() => props.editTodo(todo.id, !todo.completed)} type="checkbox" /></td>
                             <td>{todo.description}</td>
                             <td><button onClick={() => props.delTodo(todo.id)}>x</button></td>
                         </tr>
@@ -26,3 +28,7 @@ export default function Todos(props) {
         </table>
     )
 }
+const mapStoreToProps = (store) => ({ todos: store.todos })
+const mapDispatchToProps = { editTodo, delTodo }
+
+export default connect(mapStoreToProps, mapDispatchToProps)(Todos)
